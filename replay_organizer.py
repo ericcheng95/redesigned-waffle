@@ -25,7 +25,7 @@ def define_cea_date_ranges():
   """
   num_weeks = 14
   weeks = []
-  weeks.append(datetime(2019, 3, 16, 12, 0, 0, 0))
+  weeks.append(datetime(2019, 9, 7, 12, 0, 0, 0))
   d = timedelta(days=7)
   for i in range(1,num_weeks):
     weeks.append(weeks[0] + d * i)
@@ -36,7 +36,7 @@ def get_date_played(weeks, date_of_game):
   
   Args:
       weeks (Array[datetime]): dates of CEA weeks
-      date_of_game (dattime): date replay was played
+      date_of_game (datetime): date replay was played
   
   Returns:
       String: week game was played
@@ -145,6 +145,10 @@ def organize_replays(directory, output_directory, teams, aliases):
     "Winters Gate LE" :  "Winters Gate LE",
     "Ephemeron LE" : "Ephemeron LE",
   }
+
+  # Windows has to close the file before moving them, so
+  # files must be stored in a dictionary.
+  renamed_files = {}
   for replay in replays:
     try:
       # necessary stuff from s2protocol
@@ -227,13 +231,15 @@ def organize_replays(directory, output_directory, teams, aliases):
       if src.lower() != dst.lower():
         counts['replays processed'] += 1
         os.makedirs(output_directory, exist_ok=True)
-        shutil.move(src, dst)
+        renamed_files[src] = dst
       else:
         counts['replays were already processed'] += 1
     except:
       print("Error processing replay: %s" % replay)
       traceback.print_exc()
-      
+  for key, value in renamed_files.items():
+      shutil.move(key, value)
+
   for count_name, count in sorted(counts.items()):
     print(count, count_name)
 
