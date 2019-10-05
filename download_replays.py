@@ -17,6 +17,8 @@ from consts import CURRENT_SEASON_NAME, ID_DICT_JSON, URL, CURRENT_SEASON
 from drive_downloader import GoogleDriveDownloader as gdd
 from bs4 import BeautifulSoup, Tag
 
+# TODO: Automatically find this using the relevant tab.
+current_season_number = 2
 # Directory where uploaded replays are stored.
 replay_directory = "UploadHere/"# + CURRENT_SEASON + "/"
 
@@ -31,15 +33,32 @@ def update_json(id_dict):
   print(j, file=f)
   f.close()
 
+def get_url_list():
+  response = requests.get(URL)
+  response.encoding = 'utf-8'
+  soup = BeautifulSoup(response.text, 'html.parser')
+  games_list = soup.find_all("div", {"class": "shogun-accordion"})
+  starcraft_html = ""
+  for game in games_list:
+    game_title = game.find_all("h4", {"class": "shogun-accordion-title"})
+    if game_title[0].text.strip() == "Starcraft 2":
+      starcraft_html = game
+  if not starcraft_html:
+    return "Error: Starcraft 2 replays could not be found."
+
+  # The first tab body would apply to the entire Starcraft 2 tab.
+  season_tabs = starcraft_html.find_all("div", {"class": "shogun-tabs-body"})
+  
+  # Get HTML associated with current season number.
+  current_season_html = season_tabs[current_season_number]
+  current_season_links = current_season_html.find_all('a')
+  return current_season_links
 
 def download_replays(redownload):
   if (redownload):
     shutil.rmtree(replay_directory)
     # clear out the replay folder, redownload.
-  response = requests.get(URL)
-  response.encoding = 'utf-8'
-  soup = BeautifulSoup(response.text, 'html.parser')
-
+  links = get_url_list()
   try:
     with open(ID_DICT_JSON, 'r') as f:
       id_dict = json.load(f)
@@ -51,25 +70,16 @@ def download_replays(redownload):
     id_dict = {}
 
   count = 0
-  for t in soup.find_all(text=CURRENT_SEASON_NAME):
-    for item in t.parent.find_next_siblings("h4"):
-      if isinstance(item, Tag):
-        # Break upon reaching a tag that's not a link
-        # (presumably 'Starcraft 2 Spring 2019').
-        if 'class' in item.attrs:
-          print("End of the line")
-          break
-        count += 1
-        drive_id = item.a.get('href').split("=")[-1]
-        print(drive_id)
-        if drive_id not in id_dict:
-          id_dict[drive_id] = 1
-          gdd.download_file_from_google_drive(
-              file_id=drive_id, dest_path=replay_directory
-              + "temp_dir" + '.zip', new_file_name=str(count) + " ",
-              unzip=True)
+  for link in links:
+    drive_id = link.get('href').split("=")[-1]
+    print(drive_id)
+    if drive_id not in id_dict:
+      id_dict[drive_id] = 1
+      gdd.download_file_from_google_drive(
+          file_id=drive_id, dest_path=replay_directory
+          + "temp_dir" + '.zip', new_file_name=str(count) + " ",
+          unzip=True)      
   update_json(id_dict)
-
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser(
