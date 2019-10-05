@@ -23,6 +23,10 @@ python replay_organizer.py
 ```
 There'll be some errors due to a few broken SC2 Replay files, but you can ignore that.
 
+Errors may pop up due to a missing map definition or a missing team name corresponding to a player.
+In the event of a missing map definition, update map_dictionary in replay_organizer.py.
+In the event of a missing team name, update cea_names.csv by adding the player name to their corresponding team.
+
 ## To generate a stats spreadsheet for the season.
 ```
 python stats_compiler.py
