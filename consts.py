@@ -21,8 +21,7 @@ CURRENT_SEASON = "Fall2019"
 # CSV containing Team->Player information.
 TEAMS_FILE = "cea_names.csv"
 
-# Used in download_replays.py to download replays from the replay vault. This is equal to whatever's in the header: i.e
-# https://i.imgur.com/pXfIrNs.png : "Starcraft 2 Fall 2019", case sensitive.
-CURRENT_SEASON_NAME = "Starcraft 2 Fall 2019"
+# Used in download_replays.py to download replays from the replay vault. This is equal to whatever's in the header.
+CURRENT_SEASON_NAME = "Fall 2019"
 ID_DICT_JSON = "data/" + CURRENT_SEASON + "_id_dict.json"
 URL = 'https://cea.gg/pages/replay-vault'

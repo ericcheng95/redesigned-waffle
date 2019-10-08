@@ -144,6 +144,7 @@ def organize_replays(directory, output_directory, teams, aliases):
     "Disco Bloodbath LE" : "Disco Bloodbath LE",
     "Winters Gate LE" :  "Winters Gate LE",
     "Ephemeron LE" : "Ephemeron LE",
+    "World of Sleepers LE" : "World of Sleepers LE",
   }
 
   # Windows has to close the file before moving them, so
