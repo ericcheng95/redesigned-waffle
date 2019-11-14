@@ -55,9 +55,6 @@ def get_url_list():
   return current_season_links
 
 def download_replays(redownload):
-  if (redownload):
-    shutil.rmtree(replay_directory)
-    # clear out the replay folder, redownload.
   links = get_url_list()
   try:
     with open(ID_DICT_JSON, 'r') as f:
@@ -71,6 +68,7 @@ def download_replays(redownload):
 
   count = 0
   for link in links:
+    count += 1
     drive_id = link.get('href').split("=")[-1]
     print(drive_id)
     if drive_id not in id_dict:
