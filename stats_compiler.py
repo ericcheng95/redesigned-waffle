@@ -177,7 +177,10 @@ def compile_stats(directory, nicknames_dict):
       contents = archive.header['user_data_header']['content']
       header = versions.latest().decode_replay_header(contents)
       base_build = header['m_version']['m_baseBuild']
-      protocol = versions.build(base_build)
+      if base_build == 76811:
+        protocol = versions.build(76114)
+      else:
+        protocol = versions.build(base_build)
 
       # get the general info about the replay
       contents = archive.read_file('replay.details')
