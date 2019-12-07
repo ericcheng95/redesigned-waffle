@@ -42,7 +42,7 @@ done
 
 echo ""
 echo ">>Players fielded on each map:"
-for MAP in "Kairos_Junction" "New_Repugnancy" "Port_Aleksander" "Automaton" "Year_Zero" "Cyber_Forest" "Kings_Cove" "Ephemeron" "Triton" "World of Sleepers" "Thunderbird" "Disco Bloodbath" "Acropolis" "Winters Gate"
+for MAP in "Kairos_Junction" "New_Repugnancy" "Port_Aleksander" "Automaton" "Year_Zero" "Cyber_Forest" "Kings_Cove" "Ephemeron" "Triton" "World_of_Sleepers" "Thunderbird" "Disco_Bloodbath" "Acropolis" "Winters_Gate"
 do
 	echo ""
 	echo "$MAP" | sed 's/_/ /'
