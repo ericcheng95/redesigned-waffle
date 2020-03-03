@@ -18,7 +18,7 @@ from drive_downloader import GoogleDriveDownloader as gdd
 from bs4 import BeautifulSoup, Tag
 
 # TODO: Automatically find this using the relevant tab.
-current_season_number = 2
+current_season_number = 1
 # Directory where uploaded replays are stored.
 replay_directory = "UploadHere/"# + CURRENT_SEASON + "/"
 
