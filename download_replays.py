@@ -48,7 +48,8 @@ def get_url_list():
 
   # The first tab body would apply to the entire Starcraft 2 tab.
   season_tabs = starcraft_html.find_all("div", {"class": "shogun-tabs-body"})
-  
+  print(season_tabs)
+
   # Get HTML associated with current season number.
   current_season_html = season_tabs[current_season_number]
   current_season_links = current_season_html.find_all('a')

@@ -16,12 +16,17 @@ Attributes:
 
 # Current season; At the start of a new CEA season, rename this to something
 # new, whether it be Season [N=1] or Fall2020.
-CURRENT_SEASON = "Fall2019"
+CURRENT_SEASON = "Spring2020"
 
 # CSV containing Team->Player information.
 TEAMS_FILE = "cea_names.csv"
 
-# Used in download_replays.py to download replays from the replay vault. This is equal to whatever's in the header.
-CURRENT_SEASON_NAME = "Fall 2019"
+# Starting date of the season, YYYYMMDD format.
+STARTING_DATE = "20200221"
+
+# Used in download_replays.py to download replays from the replay vault.
+# This is equal to whatever's in the header.
+CURRENT_SEASON_NAME = "Spring 2020"
+
 ID_DICT_JSON = "data/" + CURRENT_SEASON + "_id_dict.json"
 URL = 'https://cea.gg/pages/replay-vault'
